@@ -10,7 +10,6 @@ const Beer = require('./models/BeerModel');
 
 //server
 
-
 app.set('port',process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public'));
 
