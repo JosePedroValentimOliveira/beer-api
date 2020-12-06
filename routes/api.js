@@ -5,7 +5,7 @@ const Beer = require('../models/BeerModel');
 
 
 router.get('/getAllBeers',async(req,res)=>{
-   let beersJson = await Beer.find().then((beers)=>{return beers;}).catch();
+   let beersJson = await Beer.find().catch();
    res.json(beersJson);
     
 })
