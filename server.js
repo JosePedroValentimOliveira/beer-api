@@ -6,32 +6,24 @@ require('dotenv').config();
 
 require('./config/db');
 
-const Beer = require('./models/BeerModel');
+
 
 //server
 
 app.set('port',process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public'));
-
-
-// Bodyparser
+app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
+
+
+app.use('/api',require('./routes/api'));
+
 app.get('/',(req,res)=>{
-    Beer.find({}).then((beers)=>{
-        res.json(beers);
-    })
+    res.json({text:"hallo"});
 })
 
-app.get('/getAllBeers',(req,res)=>{
-    Beer.find({}).then((beers)=>{
-        res.json(beers);
-    })
-})
 
-app.post('/saveBeer',(req,res)=>{
-    const {beer_name,beer_percentage,beer_type,beer_img} = req.body;
-})
 
 
 
