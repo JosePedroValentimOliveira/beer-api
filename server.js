@@ -1,9 +1,6 @@
 const express = require('express');
 const app = express();
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const session = require('express-session');
-//const expressLayouts = require('express-ejs-layouts');
+
 
 require('./config/db')
 
@@ -20,12 +17,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 
-//Express Session
-app.use(session({
-  secret:'secret',
-  resave:true,
-  saveUninitialized :true
-}));
+
 
 
 app.use('/dashboard',require('./routes/dashboard'));
