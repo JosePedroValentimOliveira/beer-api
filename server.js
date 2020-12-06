@@ -11,6 +11,7 @@ require('./config/db');
 //server
 
 app.set('port',process.env.PORT || 3000);
+app.set('view engine', 'html');
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
