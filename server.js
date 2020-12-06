@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 
-app.use('/',async (req,res)=>{
-    const beers = await Beer.find().catch();
-    res.send(beers);
+app.use('/',(req,res)=>{
+    Beer.find().then((beers)=>{res.send(beers);}).catch();
+    
 })
 
 // Connect to the database before starting the application server.
