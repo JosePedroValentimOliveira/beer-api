@@ -20,8 +20,14 @@ app.set('port',process.env.PORT || 3000);
 app.use(bodyParser.json());
 
 
+<<<<<<< HEAD
 app.get('/',(req,res)=>{
     res.send({text:"hallo"});
+=======
+app.use('/',(req,res)=>{
+    Beer.find().then((beers)=>{res.send(beers);}).catch();
+    
+>>>>>>> a3d636c3cd29bebc00bd2e499705d7eacb87a802
 })
 
 
@@ -34,6 +40,7 @@ app.get('/getAllBeers',async(req,res)=>{
     })
 })
 
+<<<<<<< HEAD
 //pagina 404
 app.use(function(req,res){
     res.type('text/plain');
@@ -52,3 +59,6 @@ app.listen(app.get('port'), () => {
     console.log(`Express started on http://localhost:${
       app.get('port')}; press Ctrl-C to terminate.`);
 });
+=======
+// CONTACTS API ROUTES BELOW
+>>>>>>> a3d636c3cd29bebc00bd2e499705d7eacb87a802
