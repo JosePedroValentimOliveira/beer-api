@@ -1,43 +1,30 @@
-const express = require('express');
-const app = express();
-
-require('dotenv').config();
+var express = require("express");
+var bodyParser = require("body-parser");
+var app = express();
 
 require('./config/db');
-
 const Beer = require('./models/BeerModel');
 
 
 
 
 
-//server
+var app = express();
+app.use(bodyParser.json());
 
-app.set('port',process.env.PORT || 3000);
+// Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 
+app.use('/',async (req,res)=>{
+    const beers = await Beer.find().catch();
+    res.send(beers);
+})
 
+// Connect to the database before starting the application server.
 
-app.get("/", (req, res) => {
-    Beer.find().then((beers)=>{res.json(beers)})
-});
+  // Initialize the app.
+  var server = app.listen(process.env.PORT || 8080, function () {
+    var port = server.address().port;
+    console.log("App now running on port", port);
+  })
 
-
-//pagina 404
-app.use(function(req,res){
-    res.type('text/plain');
-    res.status(404);
-    res.send('404 - Not Found');
-});
-
-//pagine 500 (= interne serverfout)
-app.use(function(req,res){
-    res.type('text/plain');
-    res.status(500);
-    res.send('500 - Server Error');
-});
-
-app.listen(app.get('port'), () => {
-    console.log(`Express started on http://localhost:${
-      app.get('port')}; press Ctrl-C to terminate.`);
-});
-
+// CONTACTS API ROUTES BELOW
