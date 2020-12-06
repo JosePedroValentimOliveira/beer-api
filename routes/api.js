@@ -5,9 +5,9 @@ const Beer = require('../models/BeerModel');
 
 
 router.get('/getAllBeers',(req,res)=>{
-    Beer.find().then((beers)=>{
-        res.json(beers);
-    }).catch();
+   const beersJson =  Beer.find().then((beers)=>{return beers;}).catch();
+   res.json(beersJson);
+    
 })
 
 
