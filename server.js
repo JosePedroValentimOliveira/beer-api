@@ -6,10 +6,18 @@ const PORT = process.env.PORT;
 require('./config/db');
 const Beer = require('./models/BeerModel');
 
+
+//app.set('port',process.env.PORT || 3000);
+app.use(express.static(__dirname + '/public'));
+
+
+
 app.use(express.json());
 
 app.get('/',(req,res)=>{
-    res.send('hallo')
+    Beer.find({}).then((beers)=>{
+        res.json(beers);
+    })
 })
 
 app.get('/getAllBeers',(req,res)=>{
