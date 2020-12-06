@@ -3,29 +3,23 @@ const app = express();
 
 require('dotenv').config();
 
-
 require('./config/db');
+
+const Beer = require('./models/BeerModel');
+
+
 
 
 
 //server
 
 app.set('port',process.env.PORT || 3000);
-app.set('view engine', 'html');
-app.use(express.static(__dirname + '/public'));
-app.use(express.json());
-app.use(express.urlencoded({extended:false}));
 
 
 
-app.use('/api',require('./routes/api'));
-
-app.get('/',(req,res)=>{
-    res.json({text:"hallo"});
-})
-
-
-
+app.get("/", (req, res) => {
+    Beer.find().then((beers)=>{res.json(beers)})
+});
 
 
 //pagina 404
