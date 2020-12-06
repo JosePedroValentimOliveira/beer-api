@@ -1,7 +1,7 @@
 {
-  "name": "beer-api",
+  "name": "belgium_beer",
   "version": "1.0.0",
-  "description": "",
+  "description": "Belgium Beers Api",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,19 +9,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TRGZeca/beer-api.git"
+    "url": "git+https://github.com/TRGZeca/Beer_Api.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/TRGZeca/beer-api/issues"
+    "url": "https://github.com/TRGZeca/Beer_Api/issues"
   },
-  "homepage": "https://github.com/TRGZeca/beer-api#readme",
+  "homepage": "https://github.com/TRGZeca/Beer_Api#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
     "dotenv": "^8.2.0",
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "mongoose": "^5.11.4",
-    "nodemon": "^2.0.6"
+    "express-ejs-layouts": "^2.5.0",
+    "express-session": "^1.17.1",
+    "googleapis": "^62.0.0",
+    "mongodb": "^3.6.2",
+    "mongoose": "^5.10.9",
+    "nodemon": "^2.0.6",
+    "vue": "^2.6.12"
   }
 }
