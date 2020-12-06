@@ -1,0 +1,4 @@
+/getUser
+/getAllBeers/:userId
+/saveBeer
+/saveUser
