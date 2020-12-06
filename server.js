@@ -9,7 +9,9 @@ const Beer = require('./models/BeerModel');
 app.use(express.json());
 
 app.get('/',(req,res)=>{
-    res.send('hallo')
+    Beer.find({}).then((beers)=>{
+        res.json(beers);
+    })
 })
 
 app.get('/getAllBeers',(req,res)=>{
