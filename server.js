@@ -14,7 +14,7 @@ app.get('/',(req,res)=>{
 
 app.get('/getAllBeers',(req,res)=>{
     Beer.find({}).then((beers)=>{
-        res.send(beers);
+        res.json(JSON.stringify(beers));
     })
 })
 
