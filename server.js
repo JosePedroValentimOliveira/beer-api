@@ -8,6 +8,8 @@ const Beer = require('./models/BeerModel');
 
 app.use(express.json());
 
+app.use(express.urlencoded({extended:false}));
+
 app.get('/',(req,res)=>{
     Beer.find({}).then((beers)=>{
         res.json(beers);
