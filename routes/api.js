@@ -30,9 +30,17 @@ async function fetchGoogleImageLinks(query){
 router.get('/',(req,res)=>{
     res.render('dashboard');
 })
-router.get('/dranken',async(req,res)=>{
+router.get('/dranken-lijst',(req,res)=>{
     Beer.find().then((beers)=>{res.json(beers)});
-    
+})
+
+//moet waarschijnlijk post worden voor aanpassen ofzo 
+
+router.get('/dranken-lijst/:beer',(req,res)=>{
+    Beer.find({beer_name:req.params.beer}).then((beers)=>{res.json(beers)});
+})
+router.post("/saveUser",(req,res)=>{
+    console.log(req.body);
 })
 
 router.get('/new_beer',(req,res)=>{

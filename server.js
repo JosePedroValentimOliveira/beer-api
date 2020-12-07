@@ -1,30 +1,21 @@
 const express = require('express');
 const app = express();
 
-
+//db start
 require('./config/db')
 
-
-
-
-
-
-
 app.set('port', process.env.PORT || 3000);
-
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
 app.use(express.urlencoded({extended:false}));
 
 
+// routes
+app.use('/api',require('./routes/api'));
 
 
 
-app.use('/dashboard',require('./routes/dashboard'));
-
-
-
-
+// /routes
 app.get('/', (req, res) => {
   res.send("welcome op de homepage: Work in progres")
 
