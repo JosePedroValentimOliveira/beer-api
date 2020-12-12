@@ -1,10 +1,13 @@
+const { json } = require('body-parser');
 const express = require('express');
 const router = express.Router();
 const google = require('googleapis').google;
 const customSearch = google.customsearch('v1');
+const bcrypt = require('bcryptjs')
 
 
 const Beer = require('../models/BierModel');
+const User = require('../models/UserModel');
 
 
 
@@ -40,7 +43,46 @@ router.get('/dranken-lijst/:beer',(req,res)=>{
     Beer.find({beer_name:req.params.beer}).then((beers)=>{res.json(beers)});
 })
 router.post("/saveUser",(req,res)=>{
-    console.log(req.body);
+    const {username,password} = req.body
+
+    User.findOne({username:username}).then((user)=>{
+        if(user){
+            res.send(JSON.stringify('username in gebruik'));
+        }
+        else{
+            const newUser = new User({username:username,password:password,stock:{}});
+
+            bcrypt.genSalt(10,(err,salt)=>bcrypt.hash(newUser.password,salt,(err,hash)=>{
+                if(err) throw err;
+
+                newUser.password = hash;
+                newUser.save().then().catch(err=>console.log(err))
+            }))      
+        }
+    })
+})
+router.post("/login",(req,res)=>{
+    const {username,password} = req.body
+  
+        
+    User.findOne({username:username}).then((user)=>{
+
+        if(user){
+            bcrypt.compare(password,user.password,(err,isMatch)=>{
+                if(isMatch){
+                    res.send(user._id);
+                }
+                else {res.send(err)}
+            })
+        }
+        else{
+            res.send(false);
+        }
+        
+
+
+       
+    })
 })
 
 router.get('/new_beer',(req,res)=>{

@@ -1,14 +1,15 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 
 //db start
 require('./config/db')
 
 app.set('port', process.env.PORT || 3000);
 app.use(express.static(__dirname + '/public'));
-app.use(express.json());
-app.use(express.urlencoded({extended:false}));
 
+app.use(bodyParser.urlencoded({extended:true}));
+app.use(bodyParser.json());
 
 // routes
 app.use('/api',require('./routes/api'));
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
 
   
 });
+
 
 
 
