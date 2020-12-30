@@ -8,7 +8,7 @@ const bcrypt = require('bcryptjs')
 
 const Beer = require('../models/BierModel');
 const User = require('../models/UserModel');
-
+const Stock = require('../models/StockModel');
 
 
 async function fetchGoogleImageLinks(query){
@@ -34,9 +34,25 @@ router.get('/',(req,res)=>{
     res.render('dashboard');
 })
 router.get('/dranken-lijst',(req,res)=>{
-    Beer.find().then((beers)=>{res.json(beers)});
+    Beer.find().then((beers)=>{res.send(beers)});
 })
 
+router.get('/stock',(req,res)=>{
+    const beers = [];
+    Stock.find().then(async(stocks)=>{
+        
+        for (const stock in stocks) {
+            const data = await Beer.findById({_id:stocks[stock].beer_id});
+            var obj = JSON.stringify(data);
+            obj = `${obj.substring(0,obj.length-1)},"stock":${stocks[stock].quantity}${obj.substring(obj.length-1,obj.length)}`;
+            obj = JSON.parse(obj);
+            beers.push(obj);
+        }
+        res.json(beers)
+    });
+
+    
+})
 //moet waarschijnlijk post worden voor aanpassen ofzo 
 
 router.get('/dranken-lijst/:beer',(req,res)=>{
@@ -91,6 +107,7 @@ router.get('/new_beer',(req,res)=>{
 
 router.get('/getImages', async(req,res)=>{
     const {beer_name} = req.query;
+    console.log(beer_name);
     const imagesArray = await fetchGoogleImageLinks(`${beer_name} fles`);
     res.json(imagesArray);
 })
@@ -104,22 +121,49 @@ router.post('/saveBeer',(req,res)=>{
             // Zet hier dat da een error mee geeft met de render
             // Kijk naar it project users. voor da door te sturen en register view
             console.log('bier bestaat al');
-            res.redirect("/");
+            res.json(JSON.stringify(true))
         }
         else{
+        
             const newBeer = new Beer({
-                beer_name,beer_img,beer_type,beer_percentage : `${beer_percentage}% `
+                beer_name,beer_img,beer_type,beer_percentage
             });
 
              newBeer.save().then(beer=>{
                  console.log(`${beer.beer_name} is opgeslagen`)
-                 res.redirect('/dashboard');
+                 res.json(JSON.stringify(false))
              }).catch(err=>{console.log(err)})
 
              //Voor de error hetzelfde doen als met bestaat al. Zodat de gebruiker weet dat er iets mis is gegaan. dus stuur alles terug;
         }
     }).catch();
    
+})
+
+router.post('/stock',async(req,res)=>{
+    const {beer_id,quantity} = req.body;
+
+    Stock.findOne({beer_id:beer_id}).then((found)=>{
+        console.log(found);
+        if(found){
+            let value = found.quantity + parseInt(quantity);
+            Stock.update({beer_id:beer_id},{$set: {quantity: value} }).exec();
+            res.json("Bijgewerkt!");
+        }   
+        else{
+            const newStock = new Stock({beer_id:beer_id,quantity:quantity});
+            newStock.save().then(result=>{
+                if(result){
+                    res.json(JSON.stringify(true));
+                }
+                else{
+                    res.json(JSON.stringify(false));
+                }
+            });
+            
+        }
+    });
+    
 })
 
 
