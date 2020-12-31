@@ -53,6 +53,21 @@ router.get('/stock',(req,res)=>{
 
     
 })
+/* router.get('/deleteBeer/:beerId',(req,res)=>{
+    const {beerId} = req.params;
+    Beer.findOneAndDelete({beer_id:beerId}).exec();
+    
+}) */
+router.get('/updateStock/:beerId/:quantity',(req,res)=>{
+    const{beerId,quantity} = req.params;
+    if(quantity <= 0){
+        Stock.deleteOne({beer_id:beerId}).exec();
+        res.json("Stock was 0, verwijderd uit stock!")
+    }
+    else
+    {Stock.update({beer_id:beerId},{$set: {quantity: quantity} }).exec();
+            res.json("Bijgewerkt!");}
+})
 //moet waarschijnlijk post worden voor aanpassen ofzo 
 
 router.get('/dranken-lijst/:beer',(req,res)=>{
