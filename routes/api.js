@@ -126,9 +126,18 @@ router.get('/getImages', async(req,res)=>{
     const imagesArray = await fetchGoogleImageLinks(`${beer_name} fles`);
     res.json(imagesArray);
 })
+router.post('/editBeer',async(req,res)=>{
+    const {beer_id,beer_name,beer_percentage,beer_type,beer_img} = req.body;
 
+    const object = {
+        beer_name,beer_img,beer_type,beer_percentage
+    };
+    const response = await Beer.findByIdAndUpdate({_id:beer_id},{$set:object}).exec();
+    console.log(response);
+    
+})
 router.post('/saveBeer',(req,res)=>{
-    const {beer_name,beer_percentage,beer_type,beer_img} = req.body;
+    const {beer_name,beer_img,beer_type,beer_percentage} = req.body;
     
     
     Beer.findOne({beer_name,beer_percentage}).then((beer)=>{
