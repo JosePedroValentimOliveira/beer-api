@@ -132,7 +132,7 @@ router.post('/editBeer',async(req,res)=>{
     const object = {
         beer_name,beer_img,beer_type,beer_percentage
     };
-    const response = await Beer.findByIdAndUpdate({_id:beer_id},{$set:object}).exec();
+    const response = await Beer.update({_id:beer_id},{$set:object}).exec();
     console.log(response);
     
 })
