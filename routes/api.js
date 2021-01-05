@@ -123,7 +123,7 @@ router.get('/new_beer',(req,res)=>{
 router.get('/getImages', async(req,res)=>{
     const {beer_name} = req.query;
     console.log(beer_name);
-    const imagesArray = await fetchGoogleImageLinks(`${beer_name} fles`);
+    const imagesArray = await fetchGoogleImageLinks(`${beer_name} fles met glas`);
     res.json(imagesArray);
 })
 router.post('/editBeer',async(req,res)=>{
