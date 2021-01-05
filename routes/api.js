@@ -133,7 +133,12 @@ router.post('/editBeer',async(req,res)=>{
         beer_name,beer_img,beer_type,beer_percentage
     };
     const response = await Beer.update({_id:beer_id},{$set:object}).exec();
-    console.log(response);
+    if (response != null){
+        res.json(JSON.stringify(true))
+    }
+    else{
+        res.json(JSON.stringify(false));
+    }
     
 })
 router.post('/saveBeer',(req,res)=>{
