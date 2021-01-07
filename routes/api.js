@@ -123,7 +123,7 @@ router.get('/new_beer',(req,res)=>{
 router.get('/getImages', async(req,res)=>{
     const {beer_name} = req.query;
     console.log(beer_name);
-    const imagesArray = await fetchGoogleImageLinks(`${beer_name} fles met glas`);
+    const imagesArray = await fetchGoogleImageLinks(`${beer_name} fles`);
     res.json(imagesArray);
 })
 router.post('/editBeer',async(req,res)=>{
@@ -141,6 +141,14 @@ router.post('/editBeer',async(req,res)=>{
     }
     
 })
+
+router.post('/deleteBeer',async(req,res)=>{
+ 
+    const {beer_id}= req.body;
+    const data = await Beer.findByIdAndDelete({_id:beer_id}).exec();
+    res.json(data);
+})
+
 router.post('/saveBeer',(req,res)=>{
     const {beer_name,beer_img,beer_type,beer_percentage} = req.body;
     
