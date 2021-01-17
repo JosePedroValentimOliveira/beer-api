@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 // routes
 app.use('/api',require('./routes/api'));
-app.use('/image',require('./routes/image'));
+
 
 
 // /routes
