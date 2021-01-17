@@ -146,7 +146,7 @@ router.post('/deleteBeer',async(req,res)=>{
  
     const {beer_id}= req.body;
     const data = await Beer.findByIdAndDelete({_id:beer_id}).exec();
-    await Stock.findByIdAndDelete({beer_id:beer_id}).exec();
+    
     res.json(data);
 })
 
